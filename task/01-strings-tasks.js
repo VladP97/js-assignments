@@ -1,3 +1,4 @@
+debugger;
 'use strict';
 
 /********************************************************************************************
@@ -22,7 +23,7 @@
  *   '',  'bb'  => 'bb'
  */
 function concatenateStrings(value1, value2) {
-    throw new Error('Not implemented');
+    return value1 + value2;
 }
 
 
@@ -38,7 +39,7 @@ function concatenateStrings(value1, value2) {
  *   ''      => 0
  */
 function getStringLength(value) {
-    throw new Error('Not implemented');
+    return value.length;
 }
 
 /**
@@ -55,7 +56,7 @@ function getStringLength(value) {
  *   'Chuck','Norris'  => 'Hello, Chuck Norris!'
  */
 function getStringFromTemplate(firstName, lastName) {
-    throw new Error('Not implemented');
+    return 'Hello, ' + firstName + ' ' + lastName+'!';
 }
 
 /**
@@ -69,7 +70,7 @@ function getStringFromTemplate(firstName, lastName) {
  *   'Hello, Chuck Norris!' => 'Chuck Norris'
  */
 function extractNameFromTemplate(value) {
-    throw new Error('Not implemented');
+    return value.replace(/Hello, |!/g, '');
 }
 
 
@@ -84,7 +85,7 @@ function extractNameFromTemplate(value) {
  *   'cat'       => 'c'
  */
 function getFirstChar(value) {
-    throw new Error('Not implemented');
+    return value[0];
 }
 
 /**
@@ -99,7 +100,7 @@ function getFirstChar(value) {
  *   '\tHello, World! ' => 'Hello, World!'
  */
 function removeLeadingAndTrailingWhitespaces(value) {
-    throw new Error('Not implemented');
+    return value.replace(/^\s+|\\t|\s+$/g, '');
 }
 
 /**
@@ -114,12 +115,16 @@ function removeLeadingAndTrailingWhitespaces(value) {
  *   'cat', 3 => 'catcatcat'
  */
 function repeatString(value, count) {
-    throw new Error('Not implemented');
+    let newStr = '';
+    for (let i = 0; i < count; i++) {
+        newStr += value;
+    }
+    return newStr;
 }
 
 /**
  * Remove the first occurrence of string inside another string
- * 
+ *
  * @param {string} str
  * @param {string} value
  * @return {string}
@@ -130,7 +135,8 @@ function repeatString(value, count) {
  *   'ABABAB','BA' => 'ABAB'
  */
 function removeFirstOccurrences(str, value) {
-    throw new Error('Not implemented');
+    let reg = new RegExp(value, 'i');
+    return str.replace(reg, '')
 }
 
 /**
@@ -145,7 +151,7 @@ function removeFirstOccurrences(str, value) {
  *   '<a>' => 'a'
  */
 function unbracketTag(str) {
-    throw new Error('Not implemented');
+    return str.replace(/<|>/g, '')
 }
 
 
@@ -160,7 +166,7 @@ function unbracketTag(str) {
  *  'abcdefghijklmnopqrstuvwxyz' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
  */
 function convertToUpperCase(str) {
-    throw new Error('Not implemented');
+    return str.toUpperCase();
 }
 
 /**
@@ -174,7 +180,7 @@ function convertToUpperCase(str) {
  *   'info@gmail.com' => ['info@gmail.com']
  */
 function extractEmails(str) {
-    throw new Error('Not implemented');
+    return str.split(';');
 }
 
 /**
@@ -201,7 +207,27 @@ function extractEmails(str) {
  *
  */
 function getRectangleString(width, height) {
-    throw new Error('Not implemented');
+    var str = '┌';
+    for (let i = 0; i < width - 2; i++) {
+        str += '─';
+    }
+    str += '┐\n';
+    var strHeight = '│';
+    if (height > 2) {
+        for (let i = 0; i < width - 2; i++) {
+            strHeight += ' ';
+        }
+        strHeight += '│';
+        for (let i = 0; i < height - 2; i++) {
+            str += strHeight + '\n';
+        }
+    }
+    str += '└';
+    for (let i = 0; i < width - 2; i++) {
+        str += '─';
+    }
+    str += '┘\n';
+    return str;
 }
 
 
@@ -221,7 +247,42 @@ function getRectangleString(width, height) {
  *
  */
 function encodeToRot13(str) {
-    throw new Error('Not implemented');
+    var alphFirstLower = 'abcdefghijklm';
+    var alphSecondLower = 'nopqrstuvwxyz';
+    var alphFirstUpper = 'ABCDEFGHIJKLM';
+    var alphSecondUpper = 'NOPQRSTUVWXYZ';
+    var cipher = '';
+    var cipherLengthPrev = 0;
+    for (let i = 0; i < str.length; i++) {
+        cipherLengthPrev = cipher.length;
+        if (str[i] == str[i].toUpperCase()) {
+            for (let j = 0; j < alphFirstUpper.length; j++) {
+                if (str[i] == alphFirstUpper[j]) {
+                    cipher += alphSecondUpper[j];
+                }
+            }
+            for (let j = 0; j < alphSecondUpper.length; j++) {
+                if (str[i] == alphSecondUpper[j]) {
+                    cipher += alphFirstUpper[j];
+                }
+            }
+        } else {
+            for (let j = 0; j < alphFirstLower.length; j++) {
+                if (str[i] == alphFirstLower[j]) {
+                    cipher += alphSecondLower[j];
+                }
+            }
+            for (let j = 0; j < alphSecondLower.length; j++) {
+                if (str[i] == alphSecondLower[j]) {
+                    cipher += alphFirstLower[j];
+                }
+            }
+        }
+        if (cipherLengthPrev == cipher.length) {
+          cipher += str[i];
+        }
+    }
+    return cipher;
 }
 
 /**
@@ -238,36 +299,48 @@ function encodeToRot13(str) {
  *   isString(new String('test')) => true
  */
 function isString(value) {
-    throw new Error('Not implemented');
+    if(typeof value === 'string' || value instanceof String){
+      return true;
+    } else {
+      return false;
+    }
 }
 
 
 /**
  * Returns playid card id.
- * 
+ *
  * Playing cards inittial deck inclides the cards in the following order:
- * 
+ *
  *  'A♣','2♣','3♣','4♣','5♣','6♣','7♣','8♣','9♣','10♣','J♣','Q♣','K♣',
  *  'A♦','2♦','3♦','4♦','5♦','6♦','7♦','8♦','9♦','10♦','J♦','Q♦','K♦',
  *  'A♥','2♥','3♥','4♥','5♥','6♥','7♥','8♥','9♥','10♥','J♥','Q♥','K♥',
  *  'A♠','2♠','3♠','4♠','5♠','6♠','7♠','8♠','9♠','10♠','J♠','Q♠','K♠'
- * 
+ *
  * (see https://en.wikipedia.org/wiki/Standard_52-card_deck)
  * Function returns the zero-based index of specified card in the initial deck above.
- * 
+ *
  * @param {string} value
  * @return {number}
  *
  * @example
  *   'A♣' => 0
- *   '2♣' => 1 
+ *   '2♣' => 1
  *   '3♣' => 2
  *     ...
  *   'Q♠' => 50
  *   'K♠' => 51
  */
 function getCardId(value) {
-    throw new Error('Not implemented');
+    var cardsArr = ['A♣','2♣','3♣','4♣','5♣','6♣','7♣','8♣','9♣','10♣','J♣','Q♣','K♣',
+                    'A♦','2♦','3♦','4♦','5♦','6♦','7♦','8♦','9♦','10♦','J♦','Q♦','K♦',
+                    'A♥','2♥','3♥','4♥','5♥','6♥','7♥','8♥','9♥','10♥','J♥','Q♥','K♥',
+                    'A♠','2♠','3♠','4♠','5♠','6♠','7♠','8♠','9♠','10♠','J♠','Q♠','K♠'];
+  for(let i = 0; i<cardsArr.length; i++){
+    if(cardsArr[i] == value){
+      return i;
+    }
+  }
 }
 
 

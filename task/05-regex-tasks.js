@@ -31,7 +31,7 @@
  * @return {RegExp}
  */
 function getRegexForGuid() {
-   throw new Error('Not implemented');
+   return new RegExp(/[0-9,a,b,c,d,e,f,A,B,C,D,E,F]{8}-[0-9,a,b,c,d,e,f,A,B,C,D,E,F]{4}-[0-9,a,b,c,d,e,f,A,B,C,D,E,F]{4}-[0-9,a,b,c,d,e,f,A,B,C,D,E,F]{4}-[0-9,a,b,c,d,e,f,A,B,C,D,E,F]{12}/,'g');
 }
 
 
